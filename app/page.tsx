@@ -4,6 +4,7 @@ import ParticleField from "@/components/ui/ParticleField";
 import ProcessSteps from "@/components/ui/ProcessSteps";
 import JobTypeGrid from "@/components/ui/JobTypeGrid";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { SERVICE_AREA_SUMMARY } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
   title: "Mold Inspection & Remediation",
@@ -22,9 +23,9 @@ export default function HomePage() {
             Mold Doesn&apos;t Belong Here. Let&apos;s Fix That.
           </h1>
           <p className="mt-6 max-w-2xl text-body-lg text-text-secondary">
-            Inspection, remediation, and prevention for homes and businesses across [SERVICE
-            AREA — confirm]. Certified, thorough, and built to make sure it doesn&apos;t come
-            back.
+            Inspection, remediation, and prevention for homes and businesses across{" "}
+            {SERVICE_AREA_SUMMARY}. Certified, thorough, and built to make sure it doesn&apos;t
+            come back.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Button href="/contact" variant="primary">

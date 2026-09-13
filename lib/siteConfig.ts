@@ -10,6 +10,18 @@ export const SITE_DESCRIPTION =
 export const PHONE_PLACEHOLDER = "[PHONE]";
 export const EMAIL_PLACEHOLDER = "[EMAIL]";
 
+// Confirmed by Noah: SporesRUs covers the same NYC tri-state area as Next
+// Generation Restoration (same operator).
+export const SERVICE_AREA_SUMMARY = "the NYC tri-state area";
+
+export const SERVICE_AREAS = [
+  { region: "NYC Boroughs", areas: ["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"] },
+  { region: "Long Island", areas: ["Nassau County", "Suffolk County"] },
+  { region: "Westchester County", areas: [] as string[] },
+  { region: "New Jersey", areas: [] as string[] },
+  { region: "Connecticut", areas: [] as string[] },
+];
+
 export const NAV_LINKS = [
   { href: "/mold-remediation", label: "Mold Remediation" },
   { href: "/mold-inspection-testing", label: "Inspection & Testing" },
