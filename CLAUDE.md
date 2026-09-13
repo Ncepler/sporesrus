@@ -202,13 +202,17 @@ research on halation and overstimulation).
   element on the site — every job-type page needs one with real (or clearly placeholder)
   contamination → clean photos.
 - **"Clear air" micro-animation (this site's signature moment, not NGR's):** on the Home hero,
-  a very subtle particle-drift effect — a handful of soft, low-opacity circular particles
-  (representing spores) slowly drifting and fading out as the viewport scrolls past the hero,
-  as if the air is clearing. Keep it extremely subtle (max 8–10 particles, low opacity 10–20%,
-  slow drift ~20s loop) — the point is a felt sense of "resolved," not a gimmick or a literal
-  mold-spore illustration, which would read as alarming rather than reassuring. If this proves
-  distracting or heavy on mobile performance, cut it — it's a nice-to-have polish detail, not
-  load-bearing.
+  a subtle particle-drift effect — soft, low-opacity green particles slowly drifting, gently
+  rotating, and fading out as the viewport scrolls past the hero, as if the air is clearing.
+  Revised 2026-09-13 per Noah: particles are shaped as organic, slightly irregular blobs
+  (asymmetric border-radius, not perfect circles), and a few carry one or two tiny satellite
+  dots beside them suggesting a short spore chain. This is still an abstraction, not a literal
+  illustration — no texture, no realistic mold coloring/photography, `accent` green only
+  (never `accent-2`). Keep it subtle (10–16 particles, opacity 10–20%, slow drift ~20–28s
+  loop) — the point is still a felt sense of "resolved," now reinforced by shapes that read as
+  organic rather than mechanical, not a gimmick or anything textured/realistic enough to read
+  as alarming rather than reassuring. If this proves distracting or heavy on mobile
+  performance, cut it — it's a nice-to-have polish detail, not load-bearing.
 - **Checkmark reveal:** on the process steps (inspection → containment → removal →
   verification), each step's checkmark icon draws itself in (stroke-dashoffset animation,
   400ms) as it scrolls into view, sequenced 150ms apart across the four steps.
