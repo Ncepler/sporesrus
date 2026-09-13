@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Button from "@/components/ui/Button";
 import ParticleField from "@/components/ui/ParticleField";
 import ProcessSteps from "@/components/ui/ProcessSteps";
@@ -15,10 +16,30 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-rule bg-gradient-to-b from-surface to-bg">
+      {/* Hero — full-bleed photo, 16:9 source asset. public/hero-home.jpg is a
+          placeholder path: drop the generated image there (see the ChatGPT
+          prompt from this session) and it renders with no code changes. */}
+      <section className="relative min-h-[560px] w-full overflow-hidden border-b border-rule bg-surface md:min-h-[680px]">
+        <Image
+          src="/hero-home.jpg"
+          alt="A clean, sunlit, finished basement living space after mold remediation — bright walls, warm morning light through a window, no visible damage"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-left-top"
+        />
+
+        {/* Local, eased scrim behind the text column only (not full-frame) —
+            a legibility backstop; the source photo is composed with a quiet,
+            even, bright band on the left for dark text to sit on. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-r from-bg/85 via-bg/35 to-transparent md:from-bg/80 md:via-bg/15 md:to-transparent"
+        />
+
         <ParticleField />
-        <div className="container-page relative section flex flex-col items-start">
+
+        <div className="container-page absolute inset-0 flex flex-col items-start justify-center">
           <h1 className="max-w-3xl font-display text-h1 font-semibold text-text-primary md:text-h1-lg">
             Mold Doesn&apos;t Belong Here. Let&apos;s Fix That.
           </h1>
