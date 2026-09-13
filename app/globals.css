@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #f7f9f8;
+    color: #121815;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-container px-6 md:px-8;
+  }
+
+  .section {
+    @apply py-20 md:py-28;
+  }
+}
+
+/* Scroll-reveal base state; toggled via the .is-visible class from useScrollReveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Checkmark stroke-draw, used by ProcessSteps */
+.checkmark-path {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  transition: stroke-dashoffset 400ms ease-out;
+}
+
+.checkmark-path.is-drawn {
+  stroke-dashoffset: 0;
+}
+
+/* Particle drift for the hero "clearing air" animation */
+@keyframes drift {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--particle-opacity, 0.15);
+  }
+  90% {
+    opacity: var(--particle-opacity, 0.15);
+  }
+  100% {
+    transform: translate(var(--drift-x, 20px), var(--drift-y, -60px));
+    opacity: 0;
+  }
+}
+
+.particle {
+  animation: drift var(--drift-duration, 20s) ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particle {
+    animation: none;
+    opacity: 0;
+  }
+}
