@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* Hero — full-bleed photo, 16:9 source asset. public/hero-home.jpg is a
-          placeholder path: drop the generated image there (see the ChatGPT
-          prompt from this session) and it renders with no code changes. */}
+      {/* Hero — full-bleed photo, 16:9 source asset. public/hero-home2.jpg is
+          the current source file — replace it in place to swap the photo,
+          no code changes needed. */}
       <section className="relative min-h-[560px] w-full overflow-hidden border-b border-rule bg-surface md:min-h-[680px]">
         <Image
-          src="/hero-home.jpg"
+          src="/hero-home2.jpg"
           alt="A clean, sunlit, finished basement living space after mold remediation — bright walls, warm morning light through a window, no visible damage"
           fill
           priority
