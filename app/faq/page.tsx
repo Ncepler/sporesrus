@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import CallButton from "@/components/ui/CallButton";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import FaqAccordion, { type FaqEntry } from "@/components/ui/FaqAccordion";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "FAQ",
   description: "Answers to common questions about mold inspection, remediation, insurance, and our service area.",
+  alternates: { canonical: "/faq" },
 };
 
 const FAQ_ITEMS: FaqEntry[] = [
@@ -40,23 +43,35 @@ const FAQ_ITEMS: FaqEntry[] = [
   },
   {
     question: "What areas do you serve?",
-    answer:
-      "We serve the NYC tri-state area — the five boroughs, Long Island, Westchester County, New Jersey, and Connecticut.",
+    answer: "We serve NYC and Long Island — the five boroughs, Nassau County, and Suffolk County.",
   },
 ];
 
 export default function FaqPage() {
   return (
-    <div className="container-page section max-w-3xl">
-      <ScrollReveal>
-        <h1 className="font-display text-h1 font-semibold text-text-primary md:text-h1-lg">
-          Frequently Asked Questions
-        </h1>
-      </ScrollReveal>
+    <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: "FAQ", path: "/faq" }])) }}
+      />
+      <div className="container-page section max-w-3xl">
+        <ScrollReveal>
+          <h1 className="font-display text-h1 font-semibold text-ink">Frequently Asked Questions</h1>
+        </ScrollReveal>
 
-      <ScrollReveal className="mt-10" delayMs={100}>
-        <FaqAccordion items={FAQ_ITEMS} />
-      </ScrollReveal>
-    </div>
+        <ScrollReveal className="mt-10" delayMs={100}>
+          <FaqAccordion items={FAQ_ITEMS} />
+        </ScrollReveal>
+
+        <ScrollReveal
+          className="mt-10 flex flex-col items-start gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between"
+          delayMs={150}
+        >
+          <p className="text-body text-ink-soft">Still have a question? Talking it through is faster.</p>
+          <CallButton size="sm" />
+        </ScrollReveal>
+      </div>
+    </>
   );
 }
