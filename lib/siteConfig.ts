@@ -2,24 +2,22 @@
 // Never invent real values here — replace only once Noah confirms them.
 
 export const SITE_NAME = "SporesRUs";
-export const SITE_URL = "https://sporesrus.com";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sporesrus.vercel.app";
 export const SITE_DESCRIPTION =
   "Mold inspection, remediation, and prevention for homes and businesses.";
 
-// Placeholders — intentionally blank per CLAUDE.md §2 and §8's /contact entry.
-export const PHONE_PLACEHOLDER = "[PHONE]";
-export const EMAIL_PLACEHOLDER = "[EMAIL]";
-
 // Confirmed by Noah: SporesRUs covers the same NYC tri-state area as Next
 // Generation Restoration (same operator).
-export const SERVICE_AREA_SUMMARY = "the NYC tri-state area";
+export const SERVICE_AREA_SUMMARY = "NYC and Long Island";
 
+// `note` renders in place of a town list for regions where no verified
+// town-level list exists — county/state level only, never invented towns.
 export const SERVICE_AREAS = [
-  { region: "NYC Boroughs", areas: ["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"] },
-  { region: "Long Island", areas: ["Nassau County", "Suffolk County"] },
-  { region: "Westchester County", areas: [] as string[] },
-  { region: "New Jersey", areas: [] as string[] },
-  { region: "Connecticut", areas: [] as string[] },
+  { region: "NYC Boroughs", areas: ["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"], note: null },
+  { region: "Long Island", areas: ["Nassau County", "Suffolk County"], note: null },
+  { region: "Westchester County", areas: [] as string[], note: "Countywide coverage." },
+  { region: "New Jersey", areas: [] as string[], note: "Statewide coverage." },
+  { region: "Connecticut", areas: [] as string[], note: "Statewide coverage." },
 ];
 
 export const NAV_LINKS = [

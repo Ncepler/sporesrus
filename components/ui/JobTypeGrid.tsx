@@ -23,30 +23,27 @@ const ICONS: Record<string, ReactElement> = {
   ),
 };
 
-export default function JobTypeGrid() {
+export default function JobTypeGrid({ exclude }: { exclude?: string } = {}) {
+  const jobs = exclude ? JOB_TYPES.filter((j) => j.slug !== exclude) : JOB_TYPES;
+
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-      {JOB_TYPES.map((job, i) => (
-        <ScrollReveal key={job.slug} delayMs={i * 75}>
+      {jobs.map((job, i) => (
+        <ScrollReveal key={job.slug} delayMs={i * 60}>
           <Link
             href={`/${job.slug}`}
-            className="group flex h-full flex-col rounded-card border border-rule bg-surface p-6 shadow-soft transition-transform duration-150 hover:-translate-y-1 hover:shadow-[0_16px_32px_-10px_rgba(18,24,21,0.2)]"
+            className="group hover-lift press-scale flex h-full flex-col rounded-card border border-line bg-canvas-deep p-6 shadow-soft transition-[transform,box-shadow] duration-150 hover:shadow-lift"
           >
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#00875E"
-              strokeWidth="1.6"
-              aria-hidden
-            >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0B6B5D" strokeWidth="1.6" aria-hidden>
               {ICONS[job.slug]}
             </svg>
-            <h3 className="mt-4 font-display text-h3 font-semibold text-text-primary">{job.navLabel}</h3>
-            <p className="mt-2 text-body text-text-secondary">{job.gridDescription}</p>
-            <span className="mt-4 text-meta font-semibold text-accent group-hover:underline">
-              Learn more →
+            <h3 className="mt-4 font-display text-h3 font-semibold text-ink">{job.navLabel}</h3>
+            <p className="mt-2 text-body text-ink-soft">{job.gridDescription}</p>
+            <span className="mt-4 inline-flex items-center gap-1 text-small font-semibold text-accent">
+              Learn more
+              <span aria-hidden className="transition-transform duration-150 group-hover:translate-x-1">
+                →
+              </span>
             </span>
           </Link>
         </ScrollReveal>

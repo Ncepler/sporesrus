@@ -6,7 +6,13 @@ export type JobType = {
   gridDescription: string;
   /** Verbatim intro paragraph from CLAUDE.md §8. */
   intro: string;
+  /** Real before/after job photos. Null until real photography exists — never a stand-in. */
+  beforeAfter: { before: string; beforeAlt: string; after: string; afterAlt: string } | null;
 };
+
+// No real job photography exists yet. Flip true only once Noah confirms
+// real photo pairs are wired in per job type — see BeforeAfterSlider usage.
+export const SHOW_ILLUSTRATIVE_COMPARISON = false;
 
 export const JOB_TYPES: JobType[] = [
   {
@@ -16,6 +22,7 @@ export const JOB_TYPES: JobType[] = [
     gridDescription: "Below-grade moisture, often from a slow leak or poor drainage.",
     intro:
       "Basements are the most common place mold shows up, usually because of moisture that's been sitting unnoticed — a slow foundation leak, poor drainage, or just the natural dampness of below-grade space. We identify the actual moisture source (not just the mold itself) so the problem doesn't come right back after removal.",
+    beforeAfter: null,
   },
   {
     slug: "attic-mold-removal",
@@ -24,6 +31,7 @@ export const JOB_TYPES: JobType[] = [
     gridDescription: "Roof leaks, poor ventilation, and insulation holding onto moisture.",
     intro:
       "Attic mold usually traces back to a roof leak, poor ventilation, or insulation holding onto moisture it shouldn't. We remove the mold and address the ventilation or moisture issue driving it, so the fix actually holds.",
+    beforeAfter: null,
   },
   {
     slug: "crawlspace-mold-removal",
@@ -32,6 +40,7 @@ export const JOB_TYPES: JobType[] = [
     gridDescription: "Trapped moisture that spreads mold upward into the living space.",
     intro:
       "Crawlspaces trap moisture more than almost any other part of a property, which makes them one of the most common — and most overlooked — sources of a mold problem that eventually spreads upward into the living space above. We handle full crawlspace remediation, including moisture control, so it stays fixed.",
+    beforeAfter: null,
   },
   {
     slug: "bathroom-mold-removal",
@@ -40,6 +49,7 @@ export const JOB_TYPES: JobType[] = [
     gridDescription: "Chronic moisture that keeps mold coming back after cleaning.",
     intro:
       "Bathrooms deal with more chronic moisture than any other room in a property, which means mold here often keeps coming back even after a homeowner cleans it themselves. We remove it at the source and identify the ventilation or moisture habit that's letting it return.",
+    beforeAfter: null,
   },
   {
     slug: "hvac-mold-cleaning",
@@ -48,5 +58,6 @@ export const JOB_TYPES: JobType[] = [
     gridDescription: "Ductwork that spreads spores through every room it services.",
     intro:
       "Mold in ductwork is one of the more serious versions of this problem, because your HVAC system actively spreads spores through every room it services every time it runs. We clean and treat affected ductwork and components thoroughly, so your air handling system stops being part of the problem.",
+    beforeAfter: null,
   },
 ];

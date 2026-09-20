@@ -2,32 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Design tokens — SporesRUs. Single source of truth as CSS custom
+  properties; tailwind.config.ts references these via var(--token) so
+  Tailwind utilities and hand-written CSS never fall out of sync.
+  Contrast verified with /tmp/spores-work/contrast.js (WCAG AA, all pass):
+  ink/canvas 16.44:1, ink-soft/canvas 6.68:1, white/accent 6.41:1.
+  Light theme only — no dark mode.
+*/
+:root {
+  --canvas: #f5f7f6;
+  --canvas-deep: #e9eeec;
+  --ink: #0d1b18;
+  --ink-soft: #4a5b56;
+  --line: #c8d3cf;
+  --accent: #0b6b5d;
+  --accent-hover: #094f45;
+  --on-accent: #ffffff;
+  /* Contaminant olive — non-text only: spore field, "before" states,
+     moisture-source markers. Never a competing CTA color. */
+  --spore: #8c8a3a;
+
+  /* Motion tokens — never a built-in ease-out on deliberate UI motion. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  color-scheme: light;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    background-color: #f7f9f8;
-    color: #121815;
+    background-color: var(--canvas);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
 @layer utilities {
   .container-page {
-    @apply mx-auto w-full max-w-container px-6 md:px-8;
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1240px;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
   }
 
   .section {
-    @apply py-20 md:py-28;
+    padding-block: clamp(5rem, 9vw, 9rem);
+  }
+
+  .measure {
+    max-width: 62ch;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }
 
-/* Scroll-reveal base state; toggled via the .is-visible class from useScrollReveal */
+/* ==========================================================================
+   Motion — gated, restrained, reduced-motion aware throughout.
+   ========================================================================== */
+
+/* Scroll reveal: fade up 16px + opacity, one per section, never re-triggers. */
 .reveal {
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 500ms ease-out, transform 500ms ease-out;
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
 }
 
 .reveal.is-visible {
@@ -35,26 +100,20 @@
   transform: translateY(0);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
-/* Checkmark stroke-draw, used by ProcessSteps */
+/* Checkmark stroke-draw, used by ProcessSteps / FourSteps step 4. */
 .checkmark-path {
   stroke-dasharray: 24;
   stroke-dashoffset: 24;
-  transition: stroke-dashoffset 400ms ease-out;
+  transition: stroke-dashoffset 400ms var(--ease-out);
 }
 
 .checkmark-path.is-drawn {
   stroke-dashoffset: 0;
 }
 
-/* Particle drift for the hero "clearing air" animation */
+/* Particle drift for the hero "clearing air" animation. Ambient, off the
+   main thread (CSS keyframes, transform + opacity only), paused when the
+   hero scrolls out of view via the .paused class from ParticleField. */
 @keyframes drift {
   0% {
     transform: translate(0, 0) rotate(0deg);
@@ -73,12 +132,153 @@
 }
 
 .particle {
-  animation: drift var(--drift-duration, 20s) ease-in-out infinite;
+  animation: drift var(--drift-duration, 20s) var(--ease-in-out) infinite;
+}
+
+.particle.is-paused {
+  animation-play-state: paused;
+}
+
+/* Spore field ambient drift (FourSteps stage dots). */
+@keyframes spore-drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(var(--dx, 6px), var(--dy, -8px));
+  }
+}
+
+.spore-dot {
+  animation: spore-drift var(--dur, 20s) var(--ease-in-out) infinite;
+  animation-delay: var(--delay, 0s);
+  transform-origin: center;
+}
+
+.spore-dot.is-paused {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .particle {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .checkmark-path {
+    transition-duration: 1ms;
+  }
+
+  .particle,
+  .spore-dot {
     animation: none;
     opacity: 0;
+  }
+}
+
+/* Hover-only affordances — never on touch, per the motion law. */
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+
+  .hover-darken:hover {
+    background-color: var(--accent-hover);
+  }
+}
+
+/* Press feedback — every interactive control. */
+.press-scale {
+  transition: transform 120ms var(--ease-out);
+}
+
+.press-scale:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-lift:hover {
+    transform: none;
+  }
+
+  .press-scale,
+  .press-scale:active {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* FAQ accordion — grid-rows height animation, never max-height (which
+   fights content that changes size) or JS-measured pixel heights. */
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 220ms var(--ease-out);
+}
+
+.accordion-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+.accordion-panel > div {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-panel {
+    transition: none;
+  }
+}
+
+/* Two-state nav material. Solid state adds a translucent chalk material;
+   prefers-reduced-transparency / prefers-contrast get a solid fallback. */
+.nav-material {
+  background-color: color-mix(in srgb, var(--canvas) 82%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .nav-material {
+    background-color: var(--canvas);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .nav-material {
+    background-color: var(--canvas);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom-width: 2px;
+  }
+}
+
+/* Mobile dialog menu — ease-drawer, exit faster than enter. */
+.menu-panel {
+  transition: transform 320ms var(--ease-drawer), opacity 320ms var(--ease-drawer);
+}
+
+.menu-panel[data-state="closed"] {
+  transition-duration: 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel {
+    transition: opacity 150ms linear;
+  }
+}
+
+/* Mobile bottom call bar. */
+.call-bar {
+  transition: transform 250ms var(--ease-out), opacity 250ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .call-bar {
+    transition: opacity 150ms linear;
   }
 }

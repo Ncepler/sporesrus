@@ -1,49 +1,54 @@
-import Button from "@/components/ui/Button";
+import CallButton from "@/components/ui/CallButton";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import BeforeAfterSlider from "@/components/ui/BeforeAfterSlider";
-import type { JobType } from "@/lib/jobTypes";
+import { SHOW_ILLUSTRATIVE_COMPARISON, type JobType } from "@/lib/jobTypes";
 
 /**
  * Shared layout for the 5 job-type pages (basement, attic, crawlspace,
- * bathroom, HVAC) — each page.tsx just passes its own JobType entry from
- * lib/jobTypes.ts. Copy is verbatim from CLAUDE.md §8 per job type.
+ * bathroom, HVAC). Superseded page-by-page in Phase 4 with bespoke,
+ * uniquely-ordered pages — kept here only as a safe intermediate state.
  */
 export default function JobTypePage({ job }: { job: JobType }) {
+  const showComparison = SHOW_ILLUSTRATIVE_COMPARISON || job.beforeAfter !== null;
+
   return (
     <div className="container-page section">
       <ScrollReveal>
-        <h1 className="max-w-3xl font-display text-h1 font-semibold text-text-primary md:text-h1-lg">
-          {job.title}
-        </h1>
-        <p className="mt-6 max-w-2xl text-body-lg text-text-secondary">{job.intro}</p>
+        <h1 className="max-w-3xl font-display text-h1 font-semibold text-ink">{job.title}</h1>
+        <p className="mt-6 max-w-2xl measure text-body text-ink-soft">{job.intro}</p>
         <div className="mt-8">
-          <Button href="/contact" variant="primary">
-            Schedule an Inspection
-          </Button>
+          <CallButton />
         </div>
       </ScrollReveal>
 
-      <ScrollReveal className="mt-16" delayMs={100}>
-        <h2 className="font-display text-h2 font-semibold text-text-primary">See the Difference</h2>
-        <p className="mt-2 max-w-2xl text-body text-text-secondary">
-          Real job photos are coming as they&apos;re available — for now, here&apos;s how a{" "}
-          {job.navLabel.toLowerCase()} remediation compares before and after.
-        </p>
-        <div className="mt-6 max-w-2xl">
-          <BeforeAfterSlider
-            beforeDescription={`Placeholder illustration representing a contaminated ${job.navLabel.toLowerCase()} before remediation — real job photography pending`}
-            afterDescription={`Placeholder illustration representing the same ${job.navLabel.toLowerCase()}, clean, after remediation — real job photography pending`}
-          />
-        </div>
-      </ScrollReveal>
+      {showComparison && (
+        <ScrollReveal className="mt-16" delayMs={100}>
+          <h2 className="font-display text-h2 font-semibold text-ink">See the Difference</h2>
+          <div className="mt-6 max-w-2xl">
+            {job.beforeAfter ? (
+              <BeforeAfterSlider
+                before={{ src: job.beforeAfter.before, alt: job.beforeAfter.beforeAlt }}
+                after={{ src: job.beforeAfter.after, alt: job.beforeAfter.afterAlt }}
+              />
+            ) : (
+              <BeforeAfterSlider
+                illustrative
+                beforeLabel={`Illustration representing a contaminated ${job.navLabel.toLowerCase()} before remediation`}
+                afterLabel={`Illustration representing the same ${job.navLabel.toLowerCase()}, clean, after remediation`}
+              />
+            )}
+          </div>
+        </ScrollReveal>
+      )}
 
-      <ScrollReveal className="mt-16 flex flex-col items-start gap-6 rounded-card border border-rule bg-surface p-10 shadow-soft md:flex-row md:items-center md:justify-between">
-        <p className="max-w-xl font-display text-h3 font-semibold text-text-primary">
+      <ScrollReveal
+        data-closing-cta
+        className="mt-16 flex flex-col items-start gap-6 rounded-card border border-line bg-canvas-deep p-10 shadow-soft md:flex-row md:items-center md:justify-between"
+      >
+        <p className="max-w-xl font-display text-h3 font-semibold text-ink">
           Not sure how far it&apos;s spread? An inspection gives you a straight answer.
         </p>
-        <Button href="/contact" variant="primary">
-          Schedule an Inspection
-        </Button>
+        <CallButton />
       </ScrollReveal>
     </div>
   );
