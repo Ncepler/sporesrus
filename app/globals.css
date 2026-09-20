@@ -160,6 +160,64 @@
   animation-play-state: paused;
 }
 
+/* Four Steps stage: scan sweep (Inspect), cluster outline draw (Contain),
+   dot drift-to-intake (Remove), verify label (Verify). */
+.scan-line {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 700ms var(--ease-in-out);
+}
+
+.scan-line.is-active {
+  transform: scaleX(1);
+}
+
+.cluster-outline {
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  transition: stroke-dashoffset 600ms var(--ease-in-out), stroke 300ms var(--ease-out);
+}
+
+.cluster-outline.is-drawn {
+  stroke-dashoffset: 0;
+}
+
+.cluster-outline.is-cleared {
+  stroke: var(--accent);
+}
+
+.dot-fade {
+  transition: opacity 400ms var(--ease-out), transform 500ms var(--ease-out);
+}
+
+.verify-label {
+  transition: opacity 300ms var(--ease-out);
+}
+
+/* House cross-section (Every Space Is Different). */
+.zone-outline {
+  transition: stroke 200ms var(--ease-out), stroke-width 200ms var(--ease-out);
+}
+
+.moisture-marker {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  transition: stroke-dashoffset 400ms var(--ease-out);
+}
+
+.moisture-marker.is-drawn {
+  stroke-dashoffset: 0;
+}
+
+.zone-tablist {
+  scroll-snap-type: x proximity;
+  touch-action: pan-x;
+}
+
+.zone-tab {
+  scroll-snap-align: start;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
@@ -175,6 +233,50 @@
   .spore-dot {
     animation: none;
     opacity: 0;
+  }
+
+  .scan-line,
+  .cluster-outline,
+  .dot-fade,
+  .zone-outline,
+  .moisture-marker {
+    transition-duration: 1ms;
+  }
+}
+
+/* Hero entrance — plays once on load, never scroll-triggered. */
+@keyframes hero-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-line {
+  animation: hero-line-in 500ms var(--ease-out) both;
+}
+
+@keyframes hero-photo-in {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.hero-photo {
+  animation: hero-photo-in 1000ms var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line,
+  .hero-photo {
+    animation: none;
   }
 }
 

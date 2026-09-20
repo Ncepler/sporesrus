@@ -1,93 +1,109 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Button from "@/components/ui/Button";
+import CallButton from "@/components/ui/CallButton";
 import ParticleField from "@/components/ui/ParticleField";
-import ProcessSteps from "@/components/ui/ProcessSteps";
-import JobTypeGrid from "@/components/ui/JobTypeGrid";
+import FourSteps from "@/components/ui/FourSteps";
+import HouseCrossSection from "@/components/ui/HouseCrossSection";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { SERVICE_AREA_SUMMARY } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
-  title: "Mold Inspection & Remediation",
+  title: "Mold Inspection & Remediation in NYC and Long Island",
   description:
-    "Inspection, remediation, and prevention for homes and businesses. Certified, thorough, and built to make sure it doesn't come back.",
+    "Inspection, remediation, and prevention for homes and businesses. Thorough, straightforward, and built to make sure it doesn't come back.",
+  alternates: { canonical: "/" },
 };
+
+const COMMITMENTS = [
+  "The moisture source is identified, not just the mold.",
+  "The work area is sealed before removal.",
+  "The space is verified before the job is called done.",
+];
 
 export default function HomePage() {
   return (
     <>
-      {/* Hero — full-bleed photo, 16:9 source asset. public/hero-home2.jpg is
-          the current source file — replace it in place to swap the photo,
-          no code changes needed. */}
-      <section className="relative min-h-[560px] w-full overflow-hidden border-b border-rule bg-surface md:min-h-[680px]">
-        <Image
-          src="/hero-home2.jpg"
-          alt="A clean, sunlit, finished basement living space after mold remediation — bright walls, warm morning light through a window, no visible damage"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-left-top"
-        />
-
-        {/* Local, eased scrim behind the text column only (not full-frame) —
-            a legibility backstop; the source photo is composed with a quiet,
-            even, bright band on the left for dark text to sit on. */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-r from-bg/85 via-bg/35 to-transparent md:from-bg/80 md:via-bg/15 md:to-transparent"
-        />
-
+      {/* Hero — type-left, framed photo bleeding off the right edge on desktop. */}
+      <section id="hero" className="relative -mt-20 overflow-hidden bg-canvas pt-32 pb-16 lg:pb-24">
         <ParticleField />
 
-        <div className="container-page absolute inset-0 flex flex-col items-start justify-center">
-          <h1 className="max-w-3xl font-display text-h1 font-semibold text-text-primary md:text-h1-lg">
-            Mold Doesn&apos;t Belong Here. Let&apos;s Fix That.
-          </h1>
-          <p className="mt-6 max-w-2xl text-body-lg text-text-secondary">
-            Inspection, remediation, and prevention for homes and businesses across{" "}
-            {SERVICE_AREA_SUMMARY}. Certified, thorough, and built to make sure it doesn&apos;t
-            come back.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Button href="/contact" variant="primary">
-              Schedule an Inspection
-            </Button>
-            <Button href="/mold-remediation" variant="outline">
-              Learn Our Process
-            </Button>
+        <div className="relative z-10 grid gap-10 px-[clamp(1.25rem,4vw,3rem)] lg:grid-cols-[minmax(0,540px)_1fr] lg:items-center lg:gap-12 lg:pr-0">
+          <div>
+            <h1 className="font-display text-h1 font-semibold text-ink">
+              <span className="hero-line block">Mold Doesn&apos;t Belong Here.</span>
+              <span className="hero-line block" style={{ animationDelay: "60ms" }}>
+                Let&apos;s Fix That.
+              </span>
+            </h1>
+            <p className="hero-line mt-6 measure text-body-lg text-ink-soft" style={{ animationDelay: "120ms" }}>
+              Inspection, remediation, and prevention for homes and businesses across NYC and
+              Long Island. Thorough, straightforward, and built to make sure it doesn&apos;t come
+              back.
+            </p>
+            <div
+              className="hero-line mt-8 flex flex-wrap items-center gap-x-6 gap-y-4"
+              style={{ animationDelay: "180ms" }}
+            >
+              <CallButton size="lg" showNumber />
+              <Button href="/mold-remediation" variant="quiet">
+                Learn Our Process
+              </Button>
+            </div>
+          </div>
+
+          <div className="relative aspect-[4/3] overflow-hidden rounded-card shadow-soft lg:aspect-auto lg:h-[560px] lg:rounded-l-card lg:rounded-r-none">
+            <Image
+              src="/hero-home2.jpg"
+              alt="A clean, sunlit, finished basement living space after mold remediation — bright walls, warm morning light through a window, no visible damage"
+              fill
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="hero-photo object-cover"
+            />
           </div>
         </div>
       </section>
 
-      {/* Worried about mold */}
-      <section className="section">
+      {/* Three commitments — text only, hairline dividers, no cards. */}
+      <section className="border-y border-line bg-canvas py-14">
         <div className="container-page">
+          <ScrollReveal className="grid gap-8 sm:grid-cols-3 sm:divide-x sm:divide-line">
+            {COMMITMENTS.map((c) => (
+              <p key={c} className="measure text-body-lg text-ink-soft first:sm:pl-0 sm:px-8">
+                {c}
+              </p>
+            ))}
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* The Four Steps — scroll story. */}
+      <section className="relative">
+        <div className="container-page pt-20">
           <ScrollReveal>
-            <h2 className="max-w-2xl font-display text-h2 font-semibold text-text-primary md:text-h2-lg">
+            <h2 className="max-w-2xl font-display text-h2 font-semibold text-ink">
               Worried About Mold? Start With an Inspection.
             </h2>
-            <p className="mt-4 max-w-2xl text-body-lg text-text-secondary">
+            <p className="mt-4 measure text-body-lg text-ink-soft">
               Most people don&apos;t call about mold until they&apos;ve already seen it — but by
               then it&apos;s often spread somewhere you can&apos;t see. A proper inspection tells
               you exactly what you&apos;re dealing with, and exactly what it&apos;ll take to fix
               it, before you commit to anything.
             </p>
           </ScrollReveal>
-
-          <div className="mt-12">
-            <ProcessSteps />
-          </div>
         </div>
+        <FourSteps />
       </section>
 
-      {/* Every space is different */}
-      <section className="section bg-surface">
+      {/* Every space is different — interactive house cross-section. */}
+      <section className="section bg-canvas">
         <div className="container-page">
           <ScrollReveal>
-            <h2 className="max-w-2xl font-display text-h2 font-semibold text-text-primary md:text-h2-lg">
+            <h2 className="max-w-2xl font-display text-h2 font-semibold text-ink">
               Every Space Is Different
             </h2>
-            <p className="mt-4 max-w-2xl text-body-lg text-text-secondary">
+            <p className="mt-4 measure text-body-lg text-ink-soft">
               Mold in a basement behaves differently than mold in an attic, a bathroom, or your
               ductwork — different moisture sources, different containment needs, different
               risks if it&apos;s handled wrong. That&apos;s why we treat each one as its own job,
@@ -96,21 +112,45 @@ export default function HomePage() {
           </ScrollReveal>
 
           <div className="mt-12">
-            <JobTypeGrid />
+            <HouseCrossSection />
           </div>
         </div>
       </section>
 
-      {/* Closing CTA — certifications section intentionally omitted until real credentials exist */}
-      <section className="section">
+      {/* Insurance and health — large-type text links. */}
+      <section className="bg-canvas-deep py-16">
+        <div className="container-page grid gap-8 sm:grid-cols-2">
+          <ScrollReveal>
+            <Link href="/insurance-claims" className="group block">
+              <span className="font-display text-h3 font-semibold text-ink transition-colors duration-150 group-hover:text-accent">
+                Is mold remediation covered by insurance?{" "}
+                <span aria-hidden className="inline-block transition-transform duration-150 group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+            </Link>
+          </ScrollReveal>
+          <ScrollReveal delayMs={80}>
+            <Link href="/mold-and-your-health" className="group block">
+              <span className="font-display text-h3 font-semibold text-ink transition-colors duration-150 group-hover:text-accent">
+                Mold and your health: what&apos;s actually known{" "}
+                <span aria-hidden className="inline-block transition-transform duration-150 group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+            </Link>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Closing call band */}
+      <section data-closing-cta className="section bg-canvas">
         <div className="container-page">
-          <ScrollReveal className="flex flex-col items-start gap-6 rounded-card border border-rule bg-surface p-10 shadow-soft md:flex-row md:items-center md:justify-between">
-            <p className="max-w-xl font-display text-h3 font-semibold text-text-primary md:text-h3-lg">
+          <ScrollReveal className="flex flex-col items-start gap-6 rounded-card border border-line bg-canvas-deep p-10 shadow-soft md:flex-row md:items-center md:justify-between">
+            <p className="max-w-xl font-display text-h3 font-semibold text-ink">
               Not sure what you&apos;re dealing with? An inspection gives you a straight answer.
             </p>
-            <Button href="/contact" variant="primary">
-              Schedule an Inspection
-            </Button>
+            <CallButton size="lg" showNumber />
           </ScrollReveal>
         </div>
       </section>
