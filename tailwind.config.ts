@@ -26,6 +26,7 @@ const config: Config = {
         h2: ["clamp(2rem, 3.4vw + 1rem, 3.75rem)", { lineHeight: "1.04", letterSpacing: "-0.03em" }],
         h3: ["clamp(1.375rem, 1.1vw + 1rem, 1.75rem)", { lineHeight: "1.15", letterSpacing: "-0.015em" }],
         body: ["17px", { lineHeight: "1.6" }],
+        "body-lg": ["19px", { lineHeight: "1.6" }],
         small: ["0.875rem", { lineHeight: "1.5" }],
         meta: ["0.8125rem", { lineHeight: "1.5" }],
       },

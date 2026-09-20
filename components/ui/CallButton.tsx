@@ -33,7 +33,7 @@ export default function CallButton({
   return (
     <a
       href={PHONE_TEL!}
-      className={`press-scale hover-darken inline-flex items-center justify-center gap-2.5 rounded-full bg-accent font-semibold text-on-accent transition-colors duration-150 ${sizing} ${className}`}
+      className={`tap-target-44 press-scale hover-darken inline-flex items-center justify-center gap-2.5 rounded-full bg-accent font-semibold text-on-accent transition-colors duration-150 ${sizing} ${className}`}
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0">
         <path

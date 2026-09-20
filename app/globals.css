@@ -218,6 +218,14 @@
   scroll-snap-align: start;
 }
 
+/* Coarse-pointer (touch) minimum tap target, opted into by class rather
+   than a blanket button/a rule so it never inflates inline text links. */
+@media (pointer: coarse) {
+  .tap-target-44 {
+    min-height: 44px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;

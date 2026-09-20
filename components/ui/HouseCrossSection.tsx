@@ -55,7 +55,7 @@ export default function HouseCrossSection() {
               aria-controls={`zone-panel-${zone.id}`}
               tabIndex={activeIndex === i ? 0 : -1}
               onClick={() => select(i)}
-              className={`zone-tab press-scale shrink-0 rounded-full border px-4 py-2 text-small font-semibold transition-colors duration-150 ${
+              className={`zone-tab tap-target-44 press-scale shrink-0 rounded-full border px-4 py-2 text-small font-semibold transition-colors duration-150 ${
                 activeIndex === i
                   ? "border-accent bg-accent text-on-accent"
                   : "border-line bg-canvas text-ink-soft hover:text-ink"
