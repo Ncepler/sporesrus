@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import CallButton from "@/components/ui/CallButton";
-import ParticleField from "@/components/ui/ParticleField";
 import FourSteps from "@/components/ui/FourSteps";
 import HouseCrossSection from "@/components/ui/HouseCrossSection";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import ScrollVideoHero from "@/components/ui/ScrollVideoHero";
 
 export const metadata: Metadata = {
   title: "Mold Inspection & Remediation in NYC and Long Island",
@@ -24,46 +23,35 @@ const COMMITMENTS = [
 export default function HomePage() {
   return (
     <>
-      {/* Hero — type-left, framed photo bleeding off the right edge on desktop. */}
-      <section id="hero" className="relative -mt-20 overflow-hidden bg-canvas pt-32 pb-16 lg:pb-24">
-        <ParticleField />
-
-        <div className="relative z-10 grid gap-10 px-[clamp(1.25rem,4vw,3rem)] lg:grid-cols-[minmax(0,540px)_1fr] lg:items-center lg:gap-12 lg:pr-0">
-          <div>
-            <h1 className="font-display text-h1 font-semibold text-ink">
-              <span className="hero-line block">Mold Doesn&apos;t Belong Here.</span>
-              <span className="hero-line block" style={{ animationDelay: "60ms" }}>
-                Let&apos;s Fix That.
-              </span>
-            </h1>
-            <p className="hero-line mt-6 measure text-body-lg text-ink-soft" style={{ animationDelay: "120ms" }}>
-              Inspection, remediation, and prevention for homes and businesses across NYC and
-              Long Island. Thorough, straightforward, and built to make sure it doesn&apos;t come
-              back.
-            </p>
-            <div
-              className="hero-line mt-8 flex flex-wrap items-center gap-x-6 gap-y-4"
-              style={{ animationDelay: "180ms" }}
-            >
-              <CallButton size="lg" showNumber />
-              <Button href="/mold-remediation" variant="quiet">
-                Learn Our Process
-              </Button>
-            </div>
+      {/* Hero — scroll-scrubbed video, with the pre-video static image/particle hero as the mobile and reduced-motion fallback. */}
+      <ScrollVideoHero
+        videoSrc="/videos/spores-hero.mp4"
+        posterSrc="/videos/spores-hero-poster.jpg"
+        fallbackImageSrc="/hero-home2.jpg"
+        fallbackImageAlt="A clean, sunlit, finished basement living space after mold remediation — bright walls, warm morning light through a window, no visible damage"
+        trustLines={COMMITMENTS}
+        headline={
+          <h1 className="font-display text-h1 font-semibold">
+            <span className="block">Mold Doesn&apos;t Belong Here.</span>
+            <span className="block">Let&apos;s Fix That.</span>
+          </h1>
+        }
+        paragraph={
+          <p className="measure text-body-lg">
+            Inspection, remediation, and prevention for homes and businesses across NYC and
+            Long Island. Thorough, straightforward, and built to make sure it doesn&apos;t come
+            back.
+          </p>
+        }
+        ctas={
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+            <CallButton size="lg" showNumber />
+            <Button href="/mold-remediation" variant="quiet">
+              Learn Our Process
+            </Button>
           </div>
-
-          <div className="relative aspect-[4/3] overflow-hidden rounded-card shadow-soft lg:aspect-auto lg:h-[560px] lg:rounded-l-card lg:rounded-r-none">
-            <Image
-              src="/hero-home2.jpg"
-              alt="A clean, sunlit, finished basement living space after mold remediation — bright walls, warm morning light through a window, no visible damage"
-              fill
-              priority
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="hero-photo object-cover"
-            />
-          </div>
-        </div>
-      </section>
+        }
+      />
 
       {/* Three commitments — text only, hairline dividers, no cards. */}
       <section className="border-y border-line bg-canvas py-14">
