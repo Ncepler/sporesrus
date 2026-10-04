@@ -195,12 +195,16 @@ export default function ScrollVideoHero({
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-transparent" />
         <div className="relative z-10 flex h-full flex-col justify-end px-[clamp(1.25rem,4vw,3rem)] pb-16 lg:pb-24">
-          <div ref={headlineRef} className="text-white" style={{ opacity: 0, transform: "translateY(16px)" }}>
+          <div
+            ref={headlineRef}
+            className="text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.55)]"
+            style={{ opacity: 0, transform: "translateY(16px)" }}
+          >
             {headline}
           </div>
           <div
             ref={paragraphRef}
-            className="mt-6 text-white/85"
+            className="mt-6 text-white/85 [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]"
             style={{ opacity: 0, transform: "translateY(16px)" }}
           >
             {paragraph}
@@ -211,7 +215,10 @@ export default function ScrollVideoHero({
           <div ref={trustRef} style={{ opacity: 0, transform: "translateY(16px)" }}>
             <ul className="mt-10 flex flex-col gap-2 sm:flex-row sm:gap-8">
               {trustLines.map((line) => (
-                <li key={line} className="measure text-body text-white/85">
+                <li
+                  key={line}
+                  className="measure text-body text-white/85 [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]"
+                >
                   {line}
                 </li>
               ))}
